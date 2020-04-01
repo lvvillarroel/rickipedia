@@ -1,38 +1,58 @@
 .App {
+   padding-top: 80px;
+   padding-right: 40px;
+   padding-left: 40px;
+   background-image: url("./assets/images/wallpaper.jpg");
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-attachment: fixed;
+}
+
+.page-title {
+  padding-bottom: 15px;
   text-align: center;
+  font-size: 80 px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.page-subtitle {
+  padding-bottom: 15px;
+  text-align: center;
+  background-color: black !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.character-title {
+  margin-top: 15rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  font-weight: bold;
+  display: table-cell;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.card-image-overlay {
+  position: absolute;
+  /* top: 0; */
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1.25rem;
+  padding-bottom: 6rem;
+}
+
+.search-text {
+  background-color: rgba(0, 0, 0, 0.6);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.search-text:hover {
+  color: rgb(194, 250, 65);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+a {
+  text-decoration: none !important;
+  color: white;
+}
+
+a:hover {
+  color: rgb(194, 250, 65);
 }

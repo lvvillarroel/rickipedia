@@ -1,25 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+// ojo puede ser HashRouter o BrowserRouter verlo en el deploy
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+
+import NavBar from './components/NavBar';
+import HomeScreen from "./components/HomeScreen";
+import EpisodeScreen from "./components/EpisodeScreen";
+import LocationScreen from "./components/LocationScreen";
+import CharacterScreen from "./components/CharacterScreen";
+import SearchScreen from './components/SearchScreen';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <NavBar />
+        <div className="container">
+          <Switch>
+            <Route exact path="/" component={HomeScreen} />
+            <Route exact path="/episode/:episodeIndex/" component={EpisodeScreen} />
+            <Route exact path="/location/:locationIndex/" component={LocationScreen} />
+            <Route exact path="/character/:characterIndex/" component={CharacterScreen} />
+            <Route exact path="/search/" component={SearchScreen} />
+          </Switch>
+        </div>
+      </div>
+    </Router>
   );
 }
 
