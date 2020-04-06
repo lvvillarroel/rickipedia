@@ -4,12 +4,12 @@ import fetchInfo from '../apirequest';
 
 export default class HomeScreen extends Component {
   state = {
-    path: "https://rickandmortyapi.com/api/episode/",
+    path: "https://integracion-rick-morty-api.herokuapp.com/api/episode/",
     episodes: null
   }
 
   async componentDidMount() {
-    let episodes = await fetchInfo('https://rickandmortyapi.com/api/episode/');
+    let episodes = await fetchInfo('https://integracion-rick-morty-api.herokuapp.com/api/episode/');
     let episodesList = episodes.results;
     while (episodes.info.next !== "") {
       episodes = await fetchInfo(episodes.info.next);

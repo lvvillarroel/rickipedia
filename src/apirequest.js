@@ -7,7 +7,7 @@ export default function fetchInfo(path) {
 }
 
 export function fetchSearchChar(word) {
-  return fetch(`https://rickandmortyapi.com/api/character/?name=${word}`, {
+  return fetch(`https://integracion-rick-morty-api.herokuapp.com/api/character/?name=${word}`, {
     headers: { Accept: 'application/json' }
   }).then(
     response => response.json()
@@ -17,7 +17,7 @@ export function fetchSearchChar(word) {
 }
 
 export function fetchSearchEpisode(word) {
-  return fetch(`https://rickandmortyapi.com/api/episode/?name=${word}`, {
+  return fetch(`https://integracion-rick-morty-api.herokuapp.com/api/episode/?name=${word}`, {
     headers: { Accept: 'application/json' }
   }).then(
     response => response.json()
@@ -27,7 +27,7 @@ export function fetchSearchEpisode(word) {
 }
 
 export function fetchSearchLocation(word) {
-  return fetch(`https://rickandmortyapi.com/api/location/?name=${word}`, {
+  return fetch(`https://integracion-rick-morty-api.herokuapp.com/api/location/?name=${word}`, {
     headers: { Accept: 'application/json' }
   }).then(
     response => response.json()

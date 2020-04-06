@@ -15,7 +15,7 @@ export default class LocationScreen extends Component {
 
   async componentDidMount() {
     const { locationIndex } = this.props.match.params;
-    const location = await fetchInfo(`https://rickandmortyapi.com/api/location/${locationIndex}`);
+    const location = await fetchInfo(`https://integracion-rick-morty-api.herokuapp.com/api/location/${locationIndex}`);
     location.residents.forEach(async residentPath => {
       let r = await fetchInfo(residentPath);
       this.setState({ residents: [...this.state.residents, r] });

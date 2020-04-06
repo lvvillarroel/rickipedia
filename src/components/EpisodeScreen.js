@@ -16,7 +16,7 @@ export default class EpisodeScreen extends Component {
 
   async componentDidMount() {
     const { episodeIndex } = this.props.match.params;
-    const episode = await fetchInfo(`https://rickandmortyapi.com/api/episode/${episodeIndex}`);
+    const episode = await fetchInfo(`https://integracion-rick-morty-api.herokuapp.com/api/episode/${episodeIndex}`);
     episode.characters.forEach(async characterPath => {
       let c = await fetchInfo(characterPath)
       this.setState({ characters: [...this.state.characters, c] })

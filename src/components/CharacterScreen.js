@@ -18,7 +18,7 @@ export default class CharacterScreen extends Component {
 
   async componentDidMount() {
     const { characterIndex } = this.props.match.params;
-    const character = await fetchInfo(`https://rickandmortyapi.com/api/character/${characterIndex}`);
+    const character = await fetchInfo(`https://integracion-rick-morty-api.herokuapp.com/api/character/${characterIndex}`);
     if (character.origin.url !== "") {
       let origin = await fetchInfo(character.origin.url);
       this.setState({ origin })
