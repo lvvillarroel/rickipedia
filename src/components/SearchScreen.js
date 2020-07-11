@@ -12,6 +12,7 @@ const SearchScreen = (props) => (
       count
     }
     results {
+      id,
       name
     }
   }
