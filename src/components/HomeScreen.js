@@ -1,40 +1,67 @@
-import React, { Component } from 'react';
+import React from 'react';
 import EpisodeCard from './EpisodeCard';
-import fetchInfo from '../apirequest';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 
-export default class HomeScreen extends Component {
-  state = {
-    path: "https://integracion-rick-morty-api.herokuapp.com/api/episode/",
-    episodes: null
-  }
+const HomeScreen = () => (
+  <div>
+    <h1 className="page-title text-white">Episodes</h1>
+    <div className="row">
+      <Query query={gql`{
+        episodes(page:1) {
+        info {
+          next
+        },
+        results {
+          id,
+          name, 
+          air_date,
+          episode
+        }
+      }
+      }`}>
+        {({ loading, error, data }) => {
+          if (loading) return <p>Loading ...</p>;
+          if (error) return <p>Error :(</p>;
+          return data.episodes.results.map((episode) => (
+            <EpisodeCard
+              key={episode.id}
+              name={episode.name}
+              date={episode.air_date}
+              code={episode.episode}
+              episodeIndex={episode.id} />
+          ));
+        }}
+      </Query>
+      <Query query={gql`{
+    episodes(page:2) {
+     info {
+       next
+     },
+     results {
+       id,
+       name, 
+       air_date,
+       episode
+     }
+   }
+   }`}>
+        {({ loading, error, data }) => {
+          if (loading) return <p>Loading ...</p>;
+          if (error) return <p>Error :(</p>;
+          return data.episodes.results.map((episode) => (
+            <EpisodeCard
+              key={episode.id}
+              name={episode.name}
+              date={episode.air_date}
+              code={episode.episode}
+              episodeIndex={episode.id} />
+          ));
+        }}
+      </Query>
+    </div>
+  </div>
 
-  async componentDidMount() {
-    let episodes = await fetchInfo('https://integracion-rick-morty-api.herokuapp.com/api/episode/');
-    let episodesList = episodes.results;
-    while (episodes.info.next !== "") {
-      episodes = await fetchInfo(episodes.info.next);
-      episodesList = episodesList.concat(episodes.results);
-    }
-    this.setState({ episodes: episodesList });
-  }
+);
 
-  render() {
-    return (
-      <div>
-        <h1 className="page-title text-white">Episodes</h1>
-        <div className="row">
-          {this.state.episodes ?
-            this.state.episodes.map(episode =>
-              <EpisodeCard
-                key={episode.id}
-                name={episode.name}
-                date={episode.air_date}
-                code={episode.episode}
-                episodeIndex={episode.id} />
-            ) :
-            <p> No hay datos </p>}
-        </div>
-      </div>
-    )
-  }
-}
+export default HomeScreen;

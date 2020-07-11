@@ -1,52 +1,48 @@
-import React, { Component } from 'react';
-import fetchInfo from '../apirequest';
+import React from 'react';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import CharacterCard from "./CharacterCard";
 
-export default class LocationScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      location: null,
-      residents: [],
-      locationIndex: '',
-    };
-  }
+const LocationScreen = (props) => (
+  <Query query={gql`{
+      location(id: ${props.match.params.locationIndex}) {
+        id,
+        name,
+        dimension,
+        type,
+        residents {
+          name,
+          id,
+          gender,
+          species,
+          image
+        }
+      }
+      }`}>
+    {
+      ({ loading, error, data }) => {
+        if (loading) return <p>Loading ...</p>;
+        if (error) return <p>Error :(</p>;
+        return <div>
+          <h1 className="page-title text-white"> {data.location.name}</h1>
+          <h5 className="page-subtitle text-white"> {data.location.type} in {data.location.dimension} </h5>
+          <h3 className="text-white">Residents: </h3>
+          <div className="row">
+            {data.location.residents.map(res =>
+              <CharacterCard
+                key={res.id}
+                charIndex={res.id}
+                name={res.name}
+                gender={res.gender}
+                species={res.species}
+                imageUrl={res.image}
+              />
+            )}
+          </div>
+        </div>
+      }}
+  </Query>
+);
 
-  async componentDidMount() {
-    const { locationIndex } = this.props.match.params;
-    const location = await fetchInfo(`https://integracion-rick-morty-api.herokuapp.com/api/location/${locationIndex}`);
-    location.residents.forEach(async residentPath => {
-      let r = await fetchInfo(residentPath);
-      this.setState({ residents: [...this.state.residents, r] });
-    });
-    this.setState({ locationIndex, location });
-  }
-
-
-  render() {
-    return (
-      <div>
-        {this.state.location ?
-          <div>
-            <h1 className="page-title text-white"> {this.state.location.name}</h1>
-            <h5 className="page-subtitle text-white"> {this.state.location.type} in {this.state.location.dimension} </h5>
-            <h3 className="text-white">Residents: </h3>
-            <div className="row">
-              {this.state.residents.map(res =>
-                <CharacterCard
-                  key={res.id}
-                  charIndex={res.id}
-                  name={res.name}
-                  gender={res.gender}
-                  species={res.species}
-                  imageUrl={res.image}
-                />
-              )}
-            </div>
-          </div> :
-          <h1 className=".page-title text-white"> Cargando ... </h1>}
-      </div>
-    )
-  }
-}
+export default LocationScreen;
